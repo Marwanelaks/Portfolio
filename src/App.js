@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { useTypewriter,Cursor } from "react-simple-typewriter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTypewriter, Cursor } from "react-simple-typewriter";
+import Login from "./OAuth/Login";
+import FacebookLog from "./OAuth/FacebookLogin";
+import { gapi } from "gapi-script";
+import ModalForm from "./OAuth/ModalForm";
+const ClientID = "920651298987-qchto7d6vgvjlauv084lcb48ta123id8.apps.googleusercontent.com"
 function App() {
+  useEffect(()=>{
+    function start(){
+      gapi.client.init({
+        clientID : ClientID,
+        scope:""
+      })
+    };
+    gapi.load("client:auth2",start);
+  })
   const [Light, setToDark] = useState(true)
-  const [txt,setTxt] = useState()
+  const [txt, setTxt] = useState()
   let bg
   if (Light === true) {
     bg = ` body {
@@ -58,82 +72,124 @@ function App() {
       }
       `
   }
-  
+
   const [text] = useTypewriter({
-    words: ["Freelancer","Web Developer", "Designer"],
+    words: ["Freelancer", "Web Developer", "Designer"],
     loop: {},
-    typeSpeed:200,
-    delaySpeed:200,
+    typeSpeed: 200,
+    delaySpeed: 200,
   })
 
   return (
+
     <>
-      <section className="bag">
-        <nav className="navbar navbar-expand-lg ">
+      <style>
+        {bg}
+      </style>
+   
+      <div className=" cool container"> 
+      <div className="navsm m-auto text-center">
+      <a href="#" class="icon active">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z">
+            </path></svg>
+      </a>
+      <a href="#experince" class="icon ">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 22h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3zM5 8V5c0-.805.55-.988 1-1h13v12H5V8z">
+        </path>
+        <path d="M8 6h9v2H8z"></path></svg>
+      </a>
+      <a href="#about" class="icon ">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z">
+        </path></svg>
+      </a>
+     
+      <a href="#contact" class="icon ">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 2c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h3.586L12 21.414 15.414 18H19c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2H5zm14 14h-4.414L12 18.586 9.414 16H5V4h14v12z">
+        </path><path d="M7 7h10v2H7zm0 4h7v2H7z"></path></svg></a>
+      </div>
+        <nav class="navbar  navbar-expand">
+          {/* <a href="#" class="navbar-brand frame-text">P</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuItems" aria-controls="menuItems" aria-expanded="false" aria-label="Toggle Navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuItems">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">Pricing</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">Contact</a>
+                  </li>
+              </ul>
+          </div> */}
 
-          <style>
-            {bg}
-          </style>
-          <div className="container-fluid">
-            <a className="frame-text me-1" href="#">P</a>
-            <button on className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse my-6" id="navbarScroll">
-              <div className=" navbar-collapse  menu">
-                <ul className="navbar-nav" >
 
-                  <li className="nav-item">
-                    <a className="nav-link active frame-text01" aria-current="page" href="#">Portfolio</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link frame-text03" href="#">About</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link frame-text05" href="#">Contact</a>
-                  </li>
-                </ul>
-                {
-                  Light ?
-                    <img
-                      src="/playground_assets/night.png"
-                      alt="lightmode"
-                      className="brightness"
-                      onClick={() => setToDark(!Light)}
-                    />
-                    :
-                    <img
-                      src="/playground_assets/morning.png"
-                      alt="darkmode"
-                      className="darkness"
-                      onClick={() => setToDark(!Light)}
-                    />
-                }
-              </div>
-              <form className="d-flex ">
+
+          <a className="navbar-brand frame-text m-auto " href="#">P</a>
+          {/* <button on className="navbar-toggler ko" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon "></span>
+          </button> */}
+          <div className=" navbar-collapse my-6" id="navbarScroll">
+            {/* <div className=" navbar-collapse  menu " > */}
+            <ul className="navbar-nav mr-auto" >
+
+              <li className="nav-item active">
+                <a className="nav-link active frame-text01" aria-current="page" href="#">Portfolio</a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link frame-text03" href="#">About</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link frame-text05" href="#">Contact</a>
+              </li>
+            </ul>
+            {
+              Light ?
+                <img
+                  src="/playground_assets/night.png"
+                  alt="lightmode"
+                  className="brightness"
+                  onClick={() => setToDark(!Light)}
+                />
+                :
+                <img
+                  src="/playground_assets/morning.png"
+                  alt="darkmode"
+                  className="darkness"
+                  onClick={() => setToDark(!Light)}
+                />
+            }
+            {/* </div> */}
+            {/* <form className="d-flex ">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
+              </form> */}
           </div>
         </nav>
+      </div>
 
-
-
+      <section className=" container-fluid bag">
         <section className=" back container-fuild  ">
           <div className="row m-auto text-center">
-            <div className="col-sm-4 frame-text07 text-center  m-auto  " >
-          
-  
-      
-    
+            <div className="col-sm-6 frame-text07 text-center  m-auto  " >
+
+
+
+
               <span>HI,</span>
               <br></br>
               <span>i’m marwane,</span>
               <br></br>
               <span className="text-success">{text}</span><Cursor cursorColor='red' cursorStyle="...|" /><br></br>
               <div className=" text-center">
-                <button className=" showmore m-auto btn btn-primary">show more about me </button>
+                <button className=" showmore m-auto btn ">show more about me </button>
               </div>
 
             </div>
@@ -149,10 +205,10 @@ function App() {
 
               </div>
               </div>
-              <br></br>
-              <span className="frame-text16  ">
-                <span>full stack developer</span>
-              </span><br></br>
+
+
+
+              <br />
               <div className="text-center m-auto links">
                 <a href='#'><img
                   src="/playground_assets/test212-okeg-200h.png"
@@ -216,9 +272,9 @@ function App() {
           <div className="col-sm-3  card carde">
             <img className=" m-auto img-responsive prj1" src="/playground_assets/project1.png"></img>
             <div className="info">
-              <h2 className="text-danger"><i>LiveScore :</i></h2>
+              <h2 className="text-danger tir"><i>LiveScore :</i></h2>
               <p className="desc"><b>This is a project that enables football fans to know all the information about the matches (time, stadium, league, etc.)</b></p>
-              <div className="btn btn-danger">
+              <div className="btn btn-danger bsm">
                 <a href="#" className="More"> SHOW MORE</a>
               </div>
             </div>
@@ -248,31 +304,31 @@ function App() {
       {/* </div> */}
       {/* // </div> */}
       {/* </div> */}
-      <div  className="about">
+      <div className="about">
         <div className="container">
           <div className="row">
-          <span className="frame-text18 col-sm-12 text-center">
+            <span className="frame-text18 col-sm-12 text-center">
               About
             </span>
-          <div className="row text-center pandi ">
-          <div className="col-sm-3 text-center m-auto aboutIcon">
-            <img className=" icon"  src="/playground_assets/img1.png"></img>
-            </div>
-          
-            <p className=" col-sm-8  typing">
-              I am a 20 year old Moroccan junior full stack developer.
-              I've been working with React, laravel, HTML/CSS/MySQL/JavaScript/PHP 
-              and I've been creating user interfaces with Figma for just under 2 years 
-              now and I'm confident that I have the skills and knowledge to be successful 
-              in this field. I am excited to get started in this field and help
-            </p>
+            <div className="row text-center pandi ">
+              <div className="col-sm-3 text-center m-auto aboutIcon">
+                <img className=" icon" src="/playground_assets/img1.png"></img>
+              </div>
+
+              <p className=" col-sm-8  typing">
+                I am a 20 year old Moroccan junior full stack developer.
+                I've been working with React, laravel, HTML/CSS/MySQL/JavaScript/PHP
+                and I've been creating user interfaces with Figma for just under 2 years
+                now and I'm confident that I have the skills and knowledge to be successful
+                in this field. I am excited to get started in this field and help
+              </p>
             </div>
           </div>
           <div className="row text-center">
             <div className="col-3 card text-center cards">
-            <img className="im imf m-auto " src="/playground_assets/test1.png"></img>
-            <span className="db m-auto db ">Front-End</span>
-            {/* <ul className="m-auto sol">
+              <img className="im imf m-auto " src="/playground_assets/test1.png"></img>
+              <span className="db m-auto db ">Front-End</span>
+              {/* <ul className="m-auto sol">
             <span className="">Here are some of my front-end development skills :</span>
               <li className=" m-auto">HTML, CSS and JavaScript</li>
               <li className=" m-auto">CSS Framework (Bootstrap)</li>
@@ -287,26 +343,48 @@ function App() {
             </ul> */}
             </div>
             <div className="col-3 card  cards">
-            <img className="im imb m-auto " src="/playground_assets/test2.png"></img>
-            <span className="db m-auto ">Back-End</span>
+              <img className="im imb m-auto " src="/playground_assets/test2.png"></img>
+              <span className="db m-auto ">Back-End</span>
             </div>
             <div className="col-3 card cards">
-            <img className="im iml m-auto " src="/playground_assets/E-learning.png"></img>
-            <span className="db m-auto ">E-Learning</span>
+              <img className="im iml m-auto " src="/playground_assets/E-learning.png"></img>
+              <span className="db m-auto ">E-Learning</span>
             </div>
-           
+
 
           </div>
         </div>
-        <div className="shapedividers_com-1441"/>
+        <div className="shapedividers_com-1441" />
 
-      
+
       </div>
-    <div className="Contact m-auto">
+      <div className="Contact m-auto">
+        <div className="container bolly">
+        <ModalForm/> 
+         
+        </div>
+        {/* <footer className="footer">
       <div className="container">
-          
+        <div className="row">
+          <div className="col-lg-12">
+            <ul className="list-unstyled">
+              <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+              <li>
+                <a href="#">Contact</a>
+              </li>
+            </ul>
+            <p className="mt-3 mb-3">&copy; 2023 Portfolio. All Rights Reserved.</p>
+          </div>
+        </div>
       </div>
+      </footer> */}
       </div>
+      
     </>
   );
 }
